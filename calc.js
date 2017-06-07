@@ -1,10 +1,10 @@
 var previousTarget, previousTargetText, lastMathItem;
-var calcScreen = document.querySelector('.calc-screen');
+var calcNumber = document.querySelector('.calc-number');
 var allButtons = document.getElementsByTagName('button');
 var operators = ['+', '-', '*', '/'];
 var mathEquation = [];
 
-calcScreen.textContent = '0';
+calcNumber.textContent = '0';
 
 for (var i = 0; i < allButtons.length; i++) {
   allButtons[i].addEventListener('click', calcWork, false);
@@ -16,9 +16,9 @@ function calcWork(e) {
 
   function changeScreenContent(procedure) {
     if (procedure === 'replace') {
-      calcScreen.textContent = targetText;
+      calcNumber.textContent = targetText;
     } else if (procedure === 'add') {
-      calcScreen.textContent += targetText;
+      calcNumber.textContent += targetText;
     }
   }
 
@@ -26,7 +26,7 @@ function calcWork(e) {
 
     switch (true) {
 
-      case ((calcScreen.textContent === '0') && (mathEquation[0] !== 0)):
+      case ((calcNumber.textContent === '0') && (mathEquation[0] !== 0)):
         changeScreenContent('replace');
         break;
 
@@ -54,11 +54,11 @@ function calcWork(e) {
     lastMathItem = mathEquation[mathEquation.length - 1];
 
     switch (true) {
-      case ((mathEquation.length === 0) && (calcScreen.textContent === '0')):
+      case ((mathEquation.length === 0) && (calcNumber.textContent === '0')):
         mathEquation.push(0, targetText);
         break;
 
-      case (calcScreen.textContent === 'error'):
+      case (calcNumber.textContent === 'error'):
         break;
 
      /*if an operator was clicked after clear entry and an operator (string value) is the last item in mathEquation,
@@ -79,7 +79,7 @@ function calcWork(e) {
         break;
 
       case (previousTarget.classList.contains('num')):
-        var screenContent = calcScreen.textContent;
+        var screenContent = calcNumber.textContent;
         mathEquation.push(Number(screenContent));
         mathEquation.push(targetText);
         break;
@@ -95,7 +95,7 @@ function calcWork(e) {
     /*if previously clear entry was clicked, the screen content is 0, and
     the last item in mathEquation is an operator (which can only be at index 1 or higher),
     then push 0 (the text content after CE click event) to the end of mathEquation before evaluating*/
-    if ((previousTarget.classList.contains('clear-entry')) && (calcScreen.textContent === '0')
+    if ((previousTarget.classList.contains('clear-entry')) && (calcNumber.textContent === '0')
     && (mathEquation.length >= 2)) {
       mathEquation.push(0);
       calculateAnswer();
@@ -103,20 +103,20 @@ function calcWork(e) {
 
     switch (true) {
       case (previousTarget.classList.contains('num')):
-        mathEquation.push(Number(calcScreen.textContent));
+        mathEquation.push(Number(calcNumber.textContent));
         calculateAnswer();
         break;
 
       //if the last item in mathEquation is an operator
       case ((mathEquation.length > 1) && (typeof mathEquation[mathEquation.length - 1] === 'string')):
-        calcScreen.textContent = 'error';
+        calcNumber.textContent = 'error';
         mathEquation = [];
         break;
     }
   }
 
   if (target.classList.contains('clear-all')) {
-    calcScreen.textContent = '0';
+    calcNumber.textContent = '0';
     mathEquation = [];
   }
 
@@ -124,16 +124,16 @@ function calcWork(e) {
     switch (true) {
 
       case (mathEquation.length === 0):
-        calcScreen.textContent = '0';
+        calcNumber.textContent = '0';
         break;
 
       case (mathEquation.length === 1):
-        calcScreen.textContent = '0';
+        calcNumber.textContent = '0';
         mathEquation = [];
         break;
 
       case ((mathEquation.length > 1) && (previousTarget.classList.contains('num'))):
-       calcScreen.textContent = '0';
+       calcNumber.textContent = '0';
        break;
     }
   }
@@ -211,10 +211,10 @@ function calcWork(e) {
     evalEquation();
 
     if ((isNaN(mathEquation[0])) === true) {
-      calcScreen.textContent = 'error';
+      calcNumber.textContent = 'error';
       mathEquation = [];
     } else {
-    calcScreen.textContent = mathEquation[0];
+    calcNumber.textContent = mathEquation[0];
     }
   }
   previousTarget = target;
