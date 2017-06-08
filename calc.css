@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/
+/* CSS Reset Modified: http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -17,6 +17,10 @@ body {
 }
 
 /***********************/
+body {
+  background-color: gray;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -30,6 +34,12 @@ html {
 html, body, .l-wrap, .calc-grid {
   width: 100%;
   height: 100%;
+}
+
+.l-wrap {
+  max-width: 600px;
+  /*max-height: 737px;*/
+  margin: 0 auto;
 }
 
 .calc-grid {
@@ -46,7 +56,7 @@ html, body, .l-wrap, .calc-grid {
 }
 
 .calc-number {
-  font-size: 3.3em; /*iphone 5. 3.4em iphone 6, 3.5em iphone 6plus  */
+  font-size: 3.3em; 
   float: right;
   margin-right: 5px;
   margin-top: 15px;
@@ -57,8 +67,8 @@ html, body, .l-wrap, .calc-grid {
   height: 70px;
   float: left;
 
-  margin-top: 36px; /*centered on iphone 5, bottom margin expands for larger phones*/
-  margin-bottom: 10px; /*margin minimum*/
+  margin-top: 36px; 
+  margin-bottom: 10px; 
   margin-left: 20px;
   margin-right: 20px;
 
@@ -100,16 +110,17 @@ button:focus {
   height: calc(20px + ((100% - 100px) / 5) * 2);
 }
 /*************************************************************/
-/*iphone 6 screen positioning*/
+
+/*iphone 6 calc-screen positioning: portrait*/
 @media screen
 and (min-width: 374px)
 and (min-height: 666px) {
   .calc-screen {
     margin-top: 50px;
-  }
+   }
 }
 
-/*iphone 6+ screen positioning*/
+/*iphone 6+ and larger calc-screen positioning: portrait*/
 @media screen
 and (min-width: 413px)
 and (min-height: 735px) {
@@ -118,19 +129,27 @@ and (min-height: 735px) {
   }
 }
 
+/*ipad and larger calc screen enlargement: portrait*/
+@media screen
+and (min-height: 950px) {
+  .calc-screen {
+    height: 120px;
+    font-size: 2em;
+  }
+}
 
 @media screen
 and (orientation: landscape) {
 
-	/*iphone 5*/
+  /*iphone 5*/
   .calc-screen {
     margin-top: 12px;
     height: 50px;
   }
 
   .calc-number {
-     margin-top: 8px;
-     font-size: 2.5em;
+    margin-top: 8px;
+    font-size: 2.5em;
   }
 
   button {
@@ -142,13 +161,12 @@ and (orientation: landscape) {
     height: calc(12px + ((100% - 60px) / 5) * 2);
   }
 
-
   /*iphone 6*/
   @media screen
   and (min-width: 666px)
   and (min-height: 374px) {
     .calc-screen {
-       margin-top: 20px;
+      margin-top: 20px;
     }
   }
 
@@ -158,6 +176,16 @@ and (orientation: landscape) {
   and (min-height: 412px) {
     .calc-screen {
       margin-top: 25px;
+    }
+  }
+
+  /*ipads and larger screen positioning and enlargement*/
+  @media screen
+  and (min-height: 750px) {
+    .calc-screen {
+      height: 120px;
+      margin-top: 40px;
+      font-size: 2.8em;
     }
   }
 }
