@@ -3,7 +3,6 @@ var calcNumber = document.querySelector('.calc-number');
 var allButtons = document.getElementsByTagName('button');
 var operators = ['+', '-', '*', '/'];
 var mathEquation = [];
-
 calcNumber.textContent = '0';
 
 for (var i = 0; i < allButtons.length; i++) {
@@ -11,27 +10,32 @@ for (var i = 0; i < allButtons.length; i++) {
 }
 
 function calcWork(e) {
+  var noRepeat = false;
   var target = e.target;
   var targetText = target.textContent;
 
   function changeScreenContent(procedure) {
     if (procedure === 'replace') {
       calcNumber.textContent = targetText;
-    } else if (procedure === 'add') {
+    } else if ((procedure === 'add') && (calcNumber.textContent.length < 9)) {
       calcNumber.textContent += targetText;
     }
   }
 
   if (target.classList.contains('num')) {
+    if ((calcNumber.textContent.indexOf('.') !== -1) && (targetText === '.')) {
+      noRepeat = true;
+    }
 
     switch (true) {
-
       case ((calcNumber.textContent === '0') && (mathEquation[0] !== 0)):
         changeScreenContent('replace');
         break;
 
       case (previousTarget.classList.contains('num')):
+        if (noRepeat === false) {
         changeScreenContent('add');
+        }
         break;
 
       case (previousTarget.classList.contains('op')):
@@ -66,7 +70,7 @@ function calcWork(e) {
       case ((typeof lastMathItem === 'string') && (previousTarget.classList.contains('clear-entry'))):
         for (var i = 0; i < operators.length; i++) {
           if (lastMathItem !== operators[i]) {
-          mathEquation.splice(mathEquation.length - 1, 1, targetText);
+            mathEquation.splice(mathEquation.length - 1, 1, targetText);
           }
         }
         break;
@@ -208,14 +212,18 @@ function calcWork(e) {
       }
     }
 
-    evalEquation();
-
-    if ((isNaN(mathEquation[0])) === true) {
-      calcNumber.textContent = 'error';
-      mathEquation = [];
-    } else {
-    calcNumber.textContent = mathEquation[0];
+    function errorCheck() {
+      if ((isNaN(mathEquation[0])) === true) {
+        calcNumber.textContent = 'error';
+        mathEquation = [];
+      } else if (mathEquation[0].toString().length > 9) {
+        calcNumber.textContent = 'error';
+      } else {
+        calcNumber.textContent = mathEquation[0];
+      }
     }
+    evalEquation();
+    errorCheck();
   }
   previousTarget = target;
   previousTargetText = targetText;
