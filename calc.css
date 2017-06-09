@@ -218,8 +218,7 @@ and (orientation: landscape) {
     }
   }
 
-
-	/*ipads positioning and enlargement*/
+  /*ipads positioning and enlargement*/
   @media screen
   and (min-height: 710px) {
     .calc-screen {
@@ -231,7 +230,7 @@ and (orientation: landscape) {
     }
   }
 
-	/*larger devices*/
+  /*larger devices*/
   @media screen
   and (min-height: 1000px) {
     .calc-screen {
