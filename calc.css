@@ -83,7 +83,7 @@ html, body, .l-wrap, .calc-grid {
   height: 75%;
   float: left;
 
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .col-4 {
@@ -159,7 +159,7 @@ and (min-height: 1300px) {
 @media screen
 and (orientation: landscape) {
 
-	/*iphone 5*/
+  /*iphone 5*/
   .calc-screen {
     margin-top: 15px;
     height: 50px;
