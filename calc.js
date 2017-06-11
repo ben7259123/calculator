@@ -70,7 +70,7 @@ function calcWork(e) {
       case ((typeof lastMathItem === 'string') && (previousTarget.classList.contains('clear-entry'))):
         for (var i = 0; i < operators.length; i++) {
           if (lastMathItem !== operators[i]) {
-            mathEquation.splice(mathEquation.length - 1, 1, targetText);
+          mathEquation.splice(mathEquation.length - 1, 1, targetText);
           }
         }
         break;
@@ -177,21 +177,25 @@ function calcWork(e) {
       var operandOne = opInEquation - 1;
       var operandTwo = opInEquation + 1;
 
+      var operandOneNum = new Decimal(mathEquation[operandOne]);
+      var operandTwoNum = new Decimal(mathEquation[operandTwo]);
+
       switch (mathEquation[opInEquation]) {
         case '+':
-          var result = mathEquation[operandOne] + mathEquation[operandTwo];
+          var result = operandOneNum.plus(operandTwoNum);
+          console.log(typeof result);
           break;
 
         case '-':
-          var result = mathEquation[operandOne] - mathEquation[operandTwo];
+          var result = operandOneNum.minus(operandTwoNum);
           break;
 
         case '*':
-          var result = mathEquation[operandOne] * mathEquation[operandTwo];
+          var result = operandOneNum.times(operandTwoNum);
           break;
 
         case '/':
-          var result = mathEquation[operandOne] / mathEquation[operandTwo];
+          var result = operandOneNum.div(operandTwoNum);
           break;
       }
       mathEquation.splice(operandOne, 3);
@@ -211,19 +215,30 @@ function calcWork(e) {
           opLocator();
       }
     }
+    
+    function checkAnswer() {
+      var answerString = mathEquation[0].toString();
+      switch (true) {
 
-    function errorCheck() {
-      if ((isNaN(mathEquation[0])) === true) {
-        calcNumber.textContent = 'error';
-        mathEquation = [];
-      } else if (mathEquation[0].toString().length > 9) {
-        calcNumber.textContent = 'error';
-      } else {
-        calcNumber.textContent = mathEquation[0];
+        case ((isNaN(mathEquation[0]) === true) || (mathEquation[0] > 999999999)):
+          calcNumber.textContent = 'error';
+          mathEquation = [];
+          break;
+
+        case ((answerString.length > 9) && (answerString.indexOf('.') !== -1)):
+          var decimalIndex = answerString.indexOf('.');
+          var decPlaces = 9 - (decimalIndex + 1);
+          mathEquation[0] = mathEquation[0].toDP(decPlaces, Decimal.ROUND_HALF_UP);
+          calcNumber.textContent = mathEquation[0];
+          break;
+
+        default:
+          calcNumber.textContent = mathEquation[0];
+          break;
       }
     }
     evalEquation();
-    errorCheck();
+    checkAnswer();
   }
   previousTarget = target;
   previousTargetText = targetText;
