@@ -192,7 +192,6 @@ function calcWork(e) {
       switch (mathEquation[opInEquation]) {
         case '+':
           var result = operandOneNum.plus(operandTwoNum);
-          console.log(typeof result);
           break;
 
         case '-':
