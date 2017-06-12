@@ -210,7 +210,6 @@ function calcWork(e) {
       mathEquation.splice(operandOne, 0, result);
     }
 
-
     function evalEquation() {
       opLocator();
       while (generalOpArray.length > 0) {
