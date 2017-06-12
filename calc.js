@@ -177,8 +177,17 @@ function calcWork(e) {
       var operandOne = opInEquation - 1;
       var operandTwo = opInEquation + 1;
 
-      var operandOneNum = new Decimal(mathEquation[operandOne]);
-      var operandTwoNum = new Decimal(mathEquation[operandTwo]);
+      if (typeof mathEquation[operandOne] === 'object') {
+        var operandOneNum = mathEquation[operandOne];
+      } else {
+        var operandOneNum = new Decimal(mathEquation[operandOne]);
+      }
+
+      if (typeof mathEquation[operandTwo] === 'object') {
+        var operandTwoNum = mathEquation[operandTwo];
+      } else {
+        var operandTwoNum = new Decimal(mathEquation[operandTwo]);
+      }
 
       switch (mathEquation[opInEquation]) {
         case '+':
@@ -202,6 +211,7 @@ function calcWork(e) {
       mathEquation.splice(operandOne, 0, result);
     }
 
+
     function evalEquation() {
       opLocator();
       while (generalOpArray.length > 0) {
@@ -211,8 +221,8 @@ function calcWork(e) {
           opLocator();
           continue;
         }
-          evalOp(generalOpArray[0]);
-          opLocator();
+        evalOp(generalOpArray[0]);
+        opLocator();
       }
     }
     
@@ -228,8 +238,13 @@ function calcWork(e) {
         case ((answerString.length > 9) && (answerString.indexOf('.') !== -1)):
           var decimalIndex = answerString.indexOf('.');
           var decPlaces = 9 - (decimalIndex + 1);
-          mathEquation[0] = mathEquation[0].toDP(decPlaces, Decimal.ROUND_HALF_UP);
-          calcNumber.textContent = mathEquation[0];
+          //if there are 8 digits or more to the left of the decimal point
+          if (mathEquation[0] > 10000000) {
+            calcNumber.textContent = 'error';
+          } else {
+            mathEquation[0] = mathEquation[0].toDP(decPlaces, Decimal.ROUND_HALF_UP);
+            calcNumber.textContent = mathEquation[0];
+          }
           break;
 
         default:
