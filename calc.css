@@ -207,6 +207,7 @@ and (orientation: landscape) {
       font-size: 4.1em;
     }
   }
+   
   @media screen
   and (min-height: 610px) {
     .calc-screen {
