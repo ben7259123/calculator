@@ -223,23 +223,31 @@ function calcWork(e) {
         opLocator();
       }
     }
-    
+
     function checkAnswer() {
       var answerString = mathEquation[0].toString();
       switch (true) {
 
-        case ((isNaN(mathEquation[0]) === true) || (mathEquation[0] > 999999999)):
+        case ((isNaN(mathEquation[0]) === true) || (mathEquation[0] > 999999999) || (mathEquation[0] < -999999999)):
           calcNumber.textContent = 'error';
           mathEquation = [];
           break;
 
         case ((answerString.length > 9) && (answerString.indexOf('.') !== -1)):
-          var decimalIndex = answerString.indexOf('.');
-          var decPlaces = 9 - (decimalIndex + 1);
-          //if there are 8 digits or more to the left of the decimal point
-          if (mathEquation[0] > 10000000) {
+          if ((mathEquation[0] > 10000000) || (mathEquation[0] < -10000000)) {
             calcNumber.textContent = 'error';
           } else {
+             var decPlaces;
+             var findDecPlaces = function (indexLength) {
+               var decimalIndex = answerString.indexOf('.');
+               return indexLength - (decimalIndex + 1);
+             };
+
+            if (mathEquation[0] > 0) {
+              decPlaces = findDecPlaces(9);
+            } else {
+              decPlaces = findDecPlaces(10);
+            }
             mathEquation[0] = mathEquation[0].toDP(decPlaces, Decimal.ROUND_HALF_UP);
             calcNumber.textContent = mathEquation[0];
           }
